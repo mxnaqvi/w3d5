@@ -27,14 +27,38 @@ class PolyTreeNode
   def remove_child(child_node)
     child_node.parent=nil
   end
+require 'byebug'
+  def dfs(target)
+    return self if self.value == target
+    self.children.each do |child|
+      next_child = child.dfs(target)
+      if !next_child.nil?
+        return next_child
+      end
+    end
+    return nil 
+  end
 
-#   def dfs(target)
-#     return self if self == target
+  def inspect
+    @value.inspect
+  end
 
-#         children.each do |child|
-#             # return child if dfs(child) != nil
-#         end
-#      return nil if self.parent == nil  
-#   end
+require "byebug"
+  def bfs(target)
+    queue = []
+    queue.push(self)
+
+    until queue.empty?
+      if queue.empty?
+        return nil
+      elsif queue.first.value == target
+        return queue.first
+      else
+        queue.concat(queue.first.children)
+        queue.shift
+      end
+    end
+
+  end
 
 end
